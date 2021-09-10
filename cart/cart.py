@@ -6,27 +6,27 @@ from typing import Dict
 
 class Prices:
     @abstractmethod
-    def price_for(self, productId: str) -> Decimal: raise NotImplemented()
+    def price_for(self, product_id: str) -> Decimal: raise NotImplemented()
 
 
 class Cart:
     def __init__(self):
         self.__items: Dict[str, CartItem] = {}
 
-    def add(self, productId: str) -> None:
-        if productId in self.__items:
-            self.__items[productId] = self.__items[productId].add(1)
+    def add(self, product_id: str) -> None:
+        if product_id in self.__items:
+            self.__items[product_id] = self.__items[product_id].add(1)
         else:
-            self.__items[productId] = CartItem(productId, 1)
+            self.__items[product_id] = CartItem(product_id, 1)
 
     def items(self, prices: Prices) -> list:
         return list(map(lambda i: i.to_item(prices), self.__items.values()))
 
-    def remove(self, productId: str) -> None:
-        if productId not in self.__items:
+    def remove(self, product_id: str) -> None:
+        if product_id not in self.__items:
             raise ProductNotInCart
 
-        del self.__items[productId]
+        del self.__items[product_id]
 
 
 @dataclass(frozen=True)

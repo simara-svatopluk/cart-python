@@ -8,8 +8,8 @@ class StaticPrices(Prices):
     def __init__(self, prices: dict):
         self.__prices = prices
 
-    def price_for(self, productId: str) -> Decimal:
-        return self.__prices[productId]
+    def price_for(self, product_id: str) -> Decimal:
+        return self.__prices[product_id]
 
     @staticmethod
     def with_all_prices():
