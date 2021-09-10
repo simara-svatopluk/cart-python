@@ -15,7 +15,7 @@ class Cart:
 
     def add(self, productId: str) -> None:
         if productId in self.__items:
-            self.__items[productId].add(1)
+            self.__items[productId] = self.__items[productId].add(1)
         else:
             self.__items[productId] = CartItem(productId, 1)
 
@@ -29,20 +29,23 @@ class Cart:
         del self.__items[productId]
 
 
-@dataclass
+@dataclass(frozen=True)
 class Item:
     id: str
     quantity: int
     price: Decimal
 
 
-@dataclass
+@dataclass(frozen=True)
 class CartItem:
     id: str
     quantity: int
 
-    def add(self, quantity) -> None:
-        self.quantity = self.quantity + quantity
+    def add(self, quantity) -> 'CartItem':
+        return CartItem(
+            self.id,
+            self.quantity + quantity
+        )
 
     def to_item(self, prices: Prices) -> Item:
         return Item(self.id, self.quantity, prices.price_for(self.id))
