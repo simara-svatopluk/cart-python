@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from dataclasses import dataclass
 from decimal import Decimal
+from typing import Dict
 
 
 class Prices:
@@ -10,7 +11,7 @@ class Prices:
 
 class Cart:
     def __init__(self):
-        self.__items = {}
+        self.__items: Dict[str, CartItem] = {}
 
     def add(self, productId: str) -> None:
         if productId in self.__items:
